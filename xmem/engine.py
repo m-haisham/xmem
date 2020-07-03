@@ -4,8 +4,6 @@ from typing import Dict, Union
 
 from .template import MemoryTemplate
 
-DICT_EXPOSED_METHODS = ['clear', 'items']
-
 
 class MemoryEngine(object):
     _data: Dict
@@ -28,11 +26,7 @@ class MemoryEngine(object):
         self.clear = self._data.clear
         self.items = self._data.items
 
-        # for method in DICT_EXPOSED_METHODS:
-        #     setattr(self, method, getattr(self._data, method))
-
         # read the initial data
-
         if auto_load:
             self.load()
 
