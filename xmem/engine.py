@@ -3,24 +3,24 @@ from pathlib import Path
 from typing import Dict, Union
 
 from .template import MemoryTemplate
-
+from .exceptions import NotFoundError
 
 class MemoryEngine(object):
     _data: Dict
-    _location: Path
+    _path: Path
     _template: MemoryTemplate
 
-    def __init__(self, location: Union[Path, str], template: MemoryTemplate, auto_load=True):
+    def __init__(self, path: Union[Path, str], template: MemoryTemplate, auto_load=True):
         """
-        :param location: path to save file
+        :param path: path to save file
         :param template: memory template
         """
 
         self._data = {}
         self._template = template
 
-        # update location
-        self.location = location
+        # update path
+        self.path = path
 
         # exposing dictionary methods
         self.clear = self._data.clear
@@ -31,22 +31,19 @@ class MemoryEngine(object):
             self.load()
 
     @property
-    def location(self):
-        return self._location
+    def path(self):
+        return self._path
 
-    @location.setter
-    def location(self, value: Union[Path, str]):
+    @path.setter
+    def path(self, value: Union[Path, str]):
         # conversion
         if type(value) != Path:
-            self._location = Path(value)
+            self._path = Path(value)
         else:
-            self._location = value
+            self._path = value
 
-        # making sure directory exists
-        self._location.parent.mkdir(parents=True, exist_ok=True)
-
-        # updating template location attribute
-        self._template.location = self._location
+        # updating template path attribute
+        self._template.path = self._path
 
     @property
     def template(self):
@@ -64,7 +61,7 @@ class MemoryEngine(object):
         """
         try:
             self._data = self._template.load()
-        except FileNotFoundError:
+        except NotFoundError:
             self.save()
 
     def get(self, key, default=None):

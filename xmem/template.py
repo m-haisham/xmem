@@ -2,11 +2,22 @@ from pathlib import Path
 
 
 class MemoryTemplate:
-    location: Path
+    _path: Path
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        # making sure directory exists
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        self._path = path
 
     def save(self, data: dict):
         """
-        write the given dictionary to :location:
+        write the given dictionary to :path:
 
         :param data: item to save
         """

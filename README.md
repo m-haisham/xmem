@@ -22,8 +22,8 @@ from xmem.templates import JsonTemplate
 # or for pickle based storage
 from xmem.templates import PickleTemplate
 
-# instantiate memory using save :location and :template instance
-# location may be str, or pathlib.Path object
+# instantiate memory using save :path and :template instance
+# path may be str, or pathlib.Path object
 memory = MemoryEngine('data', JsonTemplate())
 
 # optional: register save to python script exit event

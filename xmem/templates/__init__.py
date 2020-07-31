@@ -1,2 +1,3 @@
-from ._pickle import PickleTemplate
-from ._json import JsonTemplate
+from .pickle import PickleTemplate
+from .json import JsonTemplate
+from .registry import RegistryTemplate
