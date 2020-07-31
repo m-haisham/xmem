@@ -35,8 +35,8 @@ class RegistryTemplate(MemoryTemplate):
 
     def load(self) -> dict:
         try:
-            with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_WRITE) as key:
-                data_string = winreg.QueryValueEx(key, str(self.path))
+            with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_READ) as key:
+                data_string, type = winreg.QueryValueEx(key, str(self.path))
 
             return json.loads(data_string)
         except WindowsError:

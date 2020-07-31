@@ -16,7 +16,7 @@ class JsonTemplateTestCase(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.memory._data.clear()
-        self.memory._location.unlink()
+        self.memory._path.unlink()
 
     def test_save(self):
         self.memory._data = DUMMY_DATA

@@ -17,10 +17,10 @@ class MemoryEngineTestCase(unittest.TestCase):
         LOCATION = 'memorychanged'
         PATH = Path(LOCATION)
 
-        self.memory.location = LOCATION
+        self.memory.path = LOCATION
 
-        self.assertEqual(self.memory._location, PATH)
-        self.assertEqual(self.memory._template.location, PATH)
+        self.assertEqual(self.memory._path, PATH)
+        self.assertEqual(self.memory._template.path, PATH)
 
     def test_put(self):
         KEY = 'put'
