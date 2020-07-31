@@ -22,6 +22,9 @@ from xmem.templates import JsonTemplate
 # or for pickle based storage
 from xmem.templates import PickleTemplate
 
+# or Registry storage [Windows]
+from xmem.templates import RegistryTemplate
+
 # instantiate memory using save :path and :template instance
 # path may be str, or pathlib.Path object
 memory = MemoryEngine('data', JsonTemplate())
