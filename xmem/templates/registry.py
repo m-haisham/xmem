@@ -21,25 +21,25 @@ class RegistryTemplate(MemoryTemplate):
 
         self.registry_path = f'SOFTWARE\\{name}\\Settings'
 
-    def save(self, data: dict):
+    def save(self, data: dict, path):
         data_string = json.dumps(data)
         try:
             winreg.CreateKey(self.root, self.registry_path)
 
             with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_WRITE) as key:
-                winreg.SetValueEx(key, str(self.path), 0, winreg.REG_SZ, data_string)
+                winreg.SetValueEx(key, str(path), 0, winreg.REG_SZ, data_string)
 
             return True
         except WindowsError:
             return False
 
-    def load(self) -> dict:
+    def load(self, path) -> dict:
         try:
             with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_READ) as key:
-                data_string, type = winreg.QueryValueEx(key, str(self.path))
+                data_string, type = winreg.QueryValueEx(key, str(path))
 
             return json.loads(data_string)
         except WindowsError:
-            path = self.registry_path + f"\\{self.path}"
+            path = self.registry_path + f"\\{path}"
 
             raise NotFoundError(f'registry path, {path} does not exist')

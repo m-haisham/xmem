@@ -18,6 +18,7 @@ class RegistryTemplateTestCase(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.memory._data.clear()
+        self.memory.save()
 
     def test_save(self):
         self.memory._data = DUMMY_DATA

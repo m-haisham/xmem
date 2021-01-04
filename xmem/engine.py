@@ -5,6 +5,7 @@ from typing import Dict, Union
 from .template import MemoryTemplate
 from .exceptions import NotFoundError
 
+
 class MemoryEngine(object):
     _data: Dict
     _path: Path
@@ -36,14 +37,10 @@ class MemoryEngine(object):
 
     @path.setter
     def path(self, value: Union[Path, str]):
-        # conversion
         if type(value) != Path:
             self._path = Path(value)
         else:
             self._path = value
-
-        # updating template path attribute
-        self._template.path = self._path
 
     @property
     def template(self):
@@ -53,14 +50,14 @@ class MemoryEngine(object):
         """
         write current data to disk
         """
-        self._template.save(self._data)
+        self._template.save(self._data, self._path)
 
     def load(self):
         """
         read data from disk
         """
         try:
-            self._data = self._template.load()
+            self._data = self._template.load(self._path)
         except NotFoundError:
             self.save()
 
