@@ -1,5 +1,9 @@
 import json
-import winreg
+
+try:
+    import winreg
+except ImportError:
+    pass
 
 from ..template import MemoryTemplate
 from ..exceptions import NotFoundError
