@@ -1,8 +1,8 @@
 from pathlib import Path
 
 
-class MemoryTemplate:
-    def save(self, data: dict, path: Path):
+class BaseTemplate:
+    def save(self, data, path: Path):
         """
         write the given dictionary to :path:
 
@@ -11,7 +11,7 @@ class MemoryTemplate:
         """
         raise NotImplementedError
 
-    def load(self, path: Path) -> dict:
+    def load(self, path: Path):
         """
         :param path: path to load from
         :return: content read from disk

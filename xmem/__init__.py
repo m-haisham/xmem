@@ -1,5 +1,4 @@
 from .engine import MemoryEngine
-from .template import MemoryTemplate
-from .exceptions import NotFoundError
+from xmem.template import BaseTemplate
 
 __version__ = '0.1.1'

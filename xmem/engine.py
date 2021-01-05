@@ -2,16 +2,16 @@ import atexit
 from pathlib import Path
 from typing import Dict, Union
 
-from .template import MemoryTemplate
+from .template import BaseTemplate
 from .exceptions import NotFoundError
 
 
 class MemoryEngine(object):
     _data: Dict
     _path: Path
-    _template: MemoryTemplate
+    _template: BaseTemplate
 
-    def __init__(self, path: Union[Path, str], template: MemoryTemplate, auto_load=True):
+    def __init__(self, path: Union[Path, str], template: BaseTemplate, auto_load=True):
         """
         :param path: path to save file
         :param template: memory template

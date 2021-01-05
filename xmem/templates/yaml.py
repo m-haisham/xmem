@@ -5,11 +5,11 @@ try:
 except:
     pass
 
-from ..template import MemoryTemplate
+from ..template import BaseTemplate
 from ..exceptions import NotFoundError
 
 
-class YamlTemplate(MemoryTemplate):
+class YamlTemplate(BaseTemplate):
     def save(self, data: dict, path: Path):
         with path.open('w') as f:
             yaml.dump(data, f)

@@ -1,10 +1,10 @@
 import json
 
-from ..template import MemoryTemplate
+from ..template import BaseTemplate
 from ..exceptions import NotFoundError
 
 
-class JsonTemplate(MemoryTemplate):
+class JsonTemplate(BaseTemplate):
     """
     Memory template using json storage
     """

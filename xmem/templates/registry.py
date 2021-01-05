@@ -1,15 +1,15 @@
-import json
+from typing import Union
 
 try:
     import winreg
 except ImportError:
     pass
 
-from ..template import MemoryTemplate
+from ..template import BaseTemplate
 from ..exceptions import NotFoundError
 
 
-class RegistryTemplate(MemoryTemplate):
+class RegistryTemplate(BaseTemplate):
     root = winreg.HKEY_CURRENT_USER
 
     def __init__(self, name='xmem'):
@@ -25,24 +25,23 @@ class RegistryTemplate(MemoryTemplate):
 
         self.registry_path = f'SOFTWARE\\{name}\\Settings'
 
-    def save(self, data: dict, path):
-        data_string = json.dumps(data)
+    def save(self, data: Union[str, bytes], path):
         try:
             winreg.CreateKey(self.root, self.registry_path)
 
             with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_WRITE) as key:
-                winreg.SetValueEx(key, str(path), 0, winreg.REG_SZ, data_string)
+                winreg.SetValueEx(key, str(path), 0, winreg.REG_SZ, data)
 
             return True
         except WindowsError:
             return False
 
-    def load(self, path) -> dict:
+    def load(self, path) -> Union[str, bytes]:
         try:
             with winreg.OpenKey(self.root, self.registry_path, 0, winreg.KEY_READ) as key:
-                data_string, type = winreg.QueryValueEx(key, str(path))
+                data, type = winreg.QueryValueEx(key, str(path))
 
-            return json.loads(data_string)
+            return data
         except WindowsError:
             path = self.registry_path + f"\\{path}"
 
