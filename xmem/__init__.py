@@ -1,4 +1,4 @@
 from .engine import MemoryEngine
-from xmem.template import BaseTemplate
+from .template import BaseTemplate
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'

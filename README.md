@@ -10,20 +10,15 @@ Built around python dictionary.
 pip install xmem
 ```
 
-## Sample
+## Example
+
+You can use the templates as is
 
 ```python
-
 from xmem import MemoryEngine
 
 # for json based storage
 from xmem.templates import JsonTemplate
-
-# or for pickle based storage
-from xmem.templates import PickleTemplate
-
-# or Registry storage [Windows]
-from xmem.templates import RegistryTemplate
 
 # instantiate memory using save :path and :template instance
 # path may be str, or pathlib.Path object
@@ -31,8 +26,35 @@ memory = MemoryEngine('data', JsonTemplate())
 
 # optional: register save to python script exit event
 memory.save_atexit()
-
 ```
+
+or combine with different middleware for more specific use cases
+
+```python
+# raw template writes binary data
+from xmem.templates import RawTemplate
+
+# binary layer converts dict to bytes and vice versa
+# encryption layer encrypts byte data and vice versa
+from xmem.middleware import BinaryLayer, EncryptionLayer
+
+# writes encrypted data to file
+memory = MemoryEngine(
+    'data',
+    BinaryLayer(EncryptionLayer(RawTemplate(), key=[bytes]))
+)
+
+# optional: register save to python script exit event
+memory.save_atexit()
+```
+
+### Combinations
+
+- `BinaryLayer(RawTemplate())`
+- `StringLayer(RegistryTemplate())`
+- `BinaryLayer(RegistryTemplate())`
+- `BinaryLayer(EncryptionLayer(RawTemplate(), key=[bytes])`
+- `BinaryLayer(EncryptionLayer(RegistryTemplate(), key=[bytes])`
 
 ## [C](#create-update)[R](#read)[U](#create-update)[D](#delete)
 
